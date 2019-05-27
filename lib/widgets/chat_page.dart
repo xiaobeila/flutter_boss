@@ -12,7 +12,7 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: new Text('公 司',
+        title: new Text('消 息',
             style: new TextStyle(fontSize: 20.0, color: Colors.white)),
       ),
     );
