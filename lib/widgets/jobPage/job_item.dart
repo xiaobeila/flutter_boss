@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boss/model/job.dart';
 
 class JobItem extends StatelessWidget {
-  final Job job;
+  final Job item;
 
-  JobItem({Key key, this.job, this.onPressed}) : super(key: key);
-  VoidCallback onPressed;
+  const JobItem({Key key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new GestureDetector(
-      onTap: onPressed,
       child: new Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         padding: const EdgeInsets.only(
@@ -24,11 +22,11 @@ class JobItem extends StatelessWidget {
               children: <Widget>[
                 new Expanded(
                     child: Text(
-                  job.title,
+                  item.title,
                   style: new TextStyle(color: Colors.black, fontSize: 16),
                 )),
                 Text(
-                  job.salary,
+                  item.salary,
                   style:
                       new TextStyle(color: new Color(0xFF54cbc4), fontSize: 18),
                 ),
@@ -36,7 +34,7 @@ class JobItem extends StatelessWidget {
             ),
             new Padding(
               padding: EdgeInsets.only(top: 8.0),
-              child: Text(job.company),
+              child: Text(item.company),
             ),
             new Container(
               decoration: new BoxDecoration(
@@ -46,19 +44,19 @@ class JobItem extends StatelessWidget {
                   top: 3.0, bottom: 3.0, left: 8.0, right: 8.0),
               margin: const EdgeInsets.only(top: 12.0, bottom: 8.0),
               child: Text(
-                job.info,
+                item.info,
                 style: new TextStyle(color: new Color(0xFF9fa3b0)),
               ),
             ),
             new Row(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: NetworkImage(job.head),
+                  backgroundImage: NetworkImage(item.head),
                   radius: 15,
                 ),
                 new Padding(
                   padding: EdgeInsets.only(left: 8.0),
-                  child: Text(job.publish),
+                  child: Text(item.publish),
                 ),
               ],
             ),

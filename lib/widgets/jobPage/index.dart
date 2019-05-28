@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter_boss/widgets/jobPage/job_item.dart';
 import 'package:flutter_boss/model/job.dart';
 import 'package:flutter_boss/common/config/config.dart';
-import 'dart:convert';
+
+import 'package:flutter_boss/components/list_refresh.dart' as listComp;
+import 'package:flutter_boss/common/utils/net_utils.dart';
 
 class JobPage extends StatefulWidget {
   @override
@@ -11,60 +15,79 @@ class JobPage extends StatefulWidget {
 }
 
 class _JobPageState extends State<JobPage> with AutomaticKeepAliveClientMixin {
-  Future<List<Job>> _fetchJobList() async {
-    final response = await http.get('${Config.BASE_URL}/jobs/list/1');
-    List<Job> jobList = List<Job>();
+  Future<Map> _fetchJobList([Map<String, dynamic> params]) async {
+    const flutterUrl = '${Config.BASE_URL}/jobs/list';
+    var pageIndex = (params is Map) ? params['pageIndex'] : 0;
+    final _param = {'page': pageIndex};
+    var responseList = [];
+    var pageTotal = 0;
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> result = json.decode(response.body);
-      for (dynamic data in result['data']['jobs']) {
-        Job jobData = Job.fromJson(data);
-        jobList.add(jobData);
+    try {
+      var response = await NetUtils.get(flutterUrl, params: _param);
+      responseList = response['data']['jobs'];
+      pageTotal = response['data']['pages']['totalPage'];
+      if (!(pageTotal is int) || pageTotal <= 0) {
+        pageTotal = 0;
+      }
+    } catch (e) {}
+    pageIndex += 1;
+    List resultList = new List();
+    for (int i = 0; i < responseList.length; i++) {
+      try {
+        Job cellData = new Job.fromJson(responseList[i]);
+        resultList.add(cellData);
+      } catch (e) {
+        // No specified type, handles all
       }
     }
-    return jobList;
+    Map<String, dynamic> result = {
+      "list": resultList,
+      'total': pageTotal,
+      'pageIndex': pageIndex
+    };
+    return result;
   }
 
   @override
   bool get wantKeepAlive => true;
 
+  Widget makeCard(index, item) {
+    return new JobItem(item: item);
+  }
+
+  headerView() {
+    return new Container(
+//      child: new Row(
+//        children: <Widget>[
+//          Expanded(
+//            child: new Container(
+//              alignment: Alignment.center,
+//              child: Text('headerView',
+//                style: new TextStyle(color: new Color(0xFF9fa3b0),fontSize: 26.0),
+//              ),
+//            ),
+//          )
+//        ],
+//      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    super.build(context);
+    return new Scaffold(
+      appBar: new AppBar(
         elevation: 0.0,
         centerTitle: true,
         title: new Text('职 位',
             style: new TextStyle(fontSize: 20.0, color: Colors.white)),
       ),
-      body: Center(
-        child: FutureBuilder(
-          future: _fetchJobList(),
-          builder:(context, AsyncSnapshot snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return CircularProgressIndicator();
-              default:
-                if (snapshot.hasError)
-                  return new Text('Error: ${snapshot.error}');
-                else
-                  return _createListView(context, snapshot);
-            }
-          },
-        ),
+      body: new Column(children: <Widget>[
+        new Expanded(
+            child: listComp.ListRefresh(_fetchJobList, makeCard, headerView)
+        )
+      ],
       ),
-    );
-  }
-
-  Widget _createListView(BuildContext context, AsyncSnapshot snapshot) {
-    List<Job> jobList = snapshot.data;
-    return ListView.builder(
-      key: new PageStorageKey('job-list'),
-      itemCount: jobList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new JobItem(onPressed: () {}, job: jobList[index]);
-      },
     );
   }
 }
