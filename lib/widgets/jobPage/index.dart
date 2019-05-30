@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_boss/widgets/jobPage/job_item.dart';
+import 'package:flutter_boss/widgets/jobPage/index_item.dart';
 import 'package:flutter_boss/model/job.dart';
 import 'package:flutter_boss/common/config/config.dart';
 

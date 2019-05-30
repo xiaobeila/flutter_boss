@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_boss/model/job.dart';
+import 'package:flutter_boss/routers/application.dart';
+import 'package:flutter_boss/routers/routers.dart';
 
 class JobItem extends StatelessWidget {
   final Job item;
@@ -9,6 +12,10 @@ class JobItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new GestureDetector(
+      onTap: () {
+        // _launchURL(itemUrl, context);
+        Application.router.navigateTo(context, '${Routes.webViewPage}?title=${Uri.encodeComponent(item.title)}&url=${Uri.encodeComponent(item.link)}');
+      },
       child: new Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         padding: const EdgeInsets.only(

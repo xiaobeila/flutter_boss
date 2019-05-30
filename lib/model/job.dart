@@ -7,6 +7,7 @@ class Job {
   final String category;
   final String head;
   final String publish;
+  final String link;
 
   Job(
       {this.id,
@@ -16,7 +17,9 @@ class Job {
       this.info,
       this.category,
       this.head,
-      this.publish});
+      this.publish,
+      this.link,
+      });
 
   factory Job.fromJson(Map<String, dynamic> json) {
     return Job(
@@ -27,6 +30,7 @@ class Job {
       category: json['category'],
       head: json['head'],
       publish: json['publish'],
+      link: json['link'],
     );
   }
 }
