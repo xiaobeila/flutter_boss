@@ -6,7 +6,7 @@ import 'package:flutter_boss/splash.dart';
 import 'package:flutter_boss/layout_type.dart';
 import 'package:flutter_boss/widgets/jobPage/index.dart';
 import 'package:flutter_boss/widgets/mine_page.dart';
-import 'package:flutter_boss/widgets/company_page.dart';
+import 'package:flutter_boss/widgets/companyPage/index.dart';
 import 'package:flutter_boss/widgets/chat_page.dart';
 import 'package:flutter_boss/routers/routers.dart';
 import 'package:flutter_boss/routers/application.dart';

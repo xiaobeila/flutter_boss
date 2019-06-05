@@ -6,9 +6,7 @@ class Application {
   static TabController controller;
 
   static Map<String, String> github = {
-    'widgetsURL':'https://github.com/alibaba/flutter-go/blob/develop/lib/widgets/',
-    //'develop':'https://github.com/alibaba-paimai-frontend/flutter-common-widgets-app/tree/develop/lib/widgets/',
-    //'master':'https://github.com/alibaba-paimai-frontend/flutter-common-widgets-app/tree/master/lib/widgets/'
+    'widgetsURL':'https://github.com/xiaobeila/flutter_boss',
   };
 
 }
