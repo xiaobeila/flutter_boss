@@ -15,7 +15,7 @@ class CompanyItem extends StatelessWidget {
       onTap: () {
         // _launchURL(itemUrl, context);
         Application.router.navigateTo(context,
-            '${Routes.companyDetailPage}?company=${Uri.encodeComponent(item.company)}&logo=${Uri.encodeComponent(item.logo)}');
+            '${Routes.companyDetailPage}?id=${Uri.encodeComponent(item.id)}&company=${Uri.encodeComponent(item.company)}&logo=${Uri.encodeComponent(item.logo)}');
       },
       child: new Container(
         margin: const EdgeInsets.only(bottom: 10.0),

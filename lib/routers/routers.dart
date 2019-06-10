@@ -13,6 +13,7 @@ class Routes {
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
         handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+          print('ERROR====>ROUTE WAS NOT FONUND!!!');
         });
     router.define(job, handler: jobHandler);
     router.define(companyDetailPage, handler: CompanyDetailHandler);

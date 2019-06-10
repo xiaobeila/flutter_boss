@@ -16,9 +16,11 @@ var jobHandler = new Handler(
 // 公司详情
 var CompanyDetailHandler = new Handler(
   handlerFunc: (BuildContext context, params) {
+    String id = params['id']?.first;
     String company = params['company']?.first;
     String logo = params['logo']?.first;
     return new CompanyDetailPage(
+      id: id,
       company: company,
       logo: logo,
     );

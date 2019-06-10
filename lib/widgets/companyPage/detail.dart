@@ -6,13 +6,20 @@ import 'package:flutter_boss/common/utils/net_utils.dart';
 import 'package:flutter_boss/widgets/companyPage/welfare_item.dart';
 import 'package:flutter_boss/widgets/companyPage/scroll_img_item.dart';
 import 'package:flutter_boss/widgets/companyPage/gallery_page.dart';
+import 'package:flutter_boss/routers/routers.dart';
+import 'package:flutter_boss/routers/application.dart';
 
 class CompanyDetailPage extends StatefulWidget {
   final String company;
   final String logo;
+  final String id;
 
-  CompanyDetailPage({Key key, @required this.company, @required this.logo})
-      : super(key: key);
+  CompanyDetailPage({
+    Key key,
+    @required this.company,
+    @required this.logo,
+    @required this.id,
+  }) : super(key: key);
 
   @override
   _CompanyDetailPageState createState() => _CompanyDetailPageState();
@@ -89,10 +96,13 @@ class _CompanyDetailPageState extends State<CompanyDetailPage>
           slivers: <Widget>[
             new SliverAppBar(
               elevation: 0.0,
+              // 阴影的高度
               pinned: true,
-              backgroundColor:
+              //是否固定导航栏，
+              backgroundColor: //导航栏和状态栏的的颜色
                   new Color.fromARGB(_isShow == true ? 255 : 0, 68, 76, 96),
               centerTitle: false,
+              //标题是否居中
               title: new Text(
                 widget.company,
                 style: new TextStyle(
@@ -104,10 +114,14 @@ class _CompanyDetailPageState extends State<CompanyDetailPage>
               actions: <Widget>[
                 new IconButton(
                   icon: new Icon(
-                    Icons.search,
+                    Icons.near_me,
                     color: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // _launchURL(itemUrl, context);
+                    Application.router.navigateTo(context,
+                        '${Routes.webViewPage}?title=${Uri.encodeComponent(widget.company)}&url=${Uri.encodeComponent('https://www.zhipin.com${widget.id}')}');
+                  },
                 )
               ],
             ),
